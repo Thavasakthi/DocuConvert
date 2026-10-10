@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 
-// API base URL - uses relative URL when Vite proxy is active, falls back to direct port 5000
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// API base URL - connects to live Render backend, or can be overridden via VITE_API_URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://docuconvert-dmho.onrender.com';
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 /**
