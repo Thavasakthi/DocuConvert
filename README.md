@@ -212,34 +212,39 @@ curl -X POST -F "file=@sample-documents/Sample_Report.docx" http://localhost:500
 
 ## Production Deployment
 
-### Backend Deployment (Docker Container)
-Because the backend requires the LibreOffice package installed on the OS, a Docker container is recommended for cloud deployments (e.g., Render, Railway, AWS ECS, DigitalOcean):
+### Frontend Deployment (Netlify)
+1. In your Netlify dashboard, connect your GitHub repository `Thavasakthi/DocuConvert`.
+2. Netlify automatically detects the provided `netlify.toml` file:
+   - **Base directory**: `client`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+3. Add the `VITE_API_URL` environment variable pointing to your backend server URL.
 
-```dockerfile
-FROM node:20-bullseye-slim
+### Backend Deployment (Linux VPS / Cloud Server)
+Deploy the Node.js backend to any Linux server (e.g. AWS EC2, DigitalOcean Droplet, Linode, Ubuntu/Debian VPS) where LibreOffice can be installed natively:
 
-# Install LibreOffice and clean up apt cache
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libreoffice \
-    libreoffice-writer \
-    fonts-dejavu \
-    fonts-liberation \
-    && rm -rf /var/lib/apt/lists/*
+1. Install Node.js, LibreOffice, and PM2 on the server:
+   ```bash
+   sudo apt update
+   sudo apt install -y libreoffice libreoffice-writer fonts-dejavu fonts-liberation
+   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+   sudo apt install -y nodejs
+   sudo npm install -g pm2
+   ```
 
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
+2. Clone repository & install backend dependencies:
+   ```bash
+   git clone https://github.com/Thavasakthi/DocuConvert.git
+   cd DocuConvert/server
+   npm install --production
+   ```
 
-ENV PORT=5000
-EXPOSE 5000
-CMD ["node", "server.js"]
-```
-
-### Frontend Deployment (Vercel / Netlify / Cloudflare Pages)
-1. Run `npm run build` inside `client/`.
-2. Deploy the generated `client/dist` directory.
-3. Configure the environment variable `VITE_API_URL` to point to your deployed backend URL.
+3. Start backend service with PM2:
+   ```bash
+   pm2 start server.js --name "docuconvert"
+   pm2 save
+   pm2 startup
+   ```
 
 ---
 
