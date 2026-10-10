@@ -1,0 +1,14 @@
+# ==============================================================================
+# Netlify Configuration for DocuConvert Frontend
+# ==============================================================================
+
+[build]
+  base = "client"
+  publish = "dist"
+  command = "npm run build"
+
+# Redirect all requests to index.html for Single Page Application (SPA) routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

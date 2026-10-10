@@ -1,0 +1,26 @@
+{
+  "name": "word-to-pdf-server",
+  "version": "1.0.0",
+  "description": "Express.js backend for converting Word documents (.docx) to PDF using headless LibreOffice",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "word-to-pdf",
+    "docx",
+    "pdf",
+    "libreoffice",
+    "express",
+    "multer"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
