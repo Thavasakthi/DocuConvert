@@ -212,13 +212,14 @@ curl -X POST -F "file=@sample-documents/Sample_Report.docx" http://localhost:500
 
 ## Production Deployment
 
-### Frontend Deployment (Netlify)
-1. In your Netlify dashboard, connect your GitHub repository `Thavasakthi/DocuConvert`.
-2. Netlify automatically detects the provided `netlify.toml` file:
-   - **Base directory**: `client`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `dist`
-3. Add the `VITE_API_URL` environment variable pointing to your backend server URL.
+### Frontend Deployment
+1. Build the production React assets:
+   ```bash
+   cd client
+   npm run build
+   ```
+2. The compiled static website is generated in `client/dist/`.
+3. Set `VITE_API_URL` to point to your deployed backend URL.
 
 ### Backend Deployment (Linux VPS / Cloud Server)
 Deploy the Node.js backend to any Linux server (e.g. AWS EC2, DigitalOcean Droplet, Linode, Ubuntu/Debian VPS) where LibreOffice can be installed natively:
